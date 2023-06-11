@@ -1,0 +1,6 @@
+<h3>Create an Account</h3>
+<form [formGroup]="authForm">
+  <input formArrayName="username" placeholder="Username" type="text" />
+  <input formControlName="password" type="text" />
+  <input formControlName="passwordConfirmation" type="text" />
+</form>
