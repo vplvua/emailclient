@@ -3,16 +3,19 @@
   <div class="field">
     <label for="username">Username</label>
     <input
-      formArrayName="username"
+      formControlName="username"
       placeholder="Username"
       type="text"
       name="username"
     />
   </div>
+  {{ authForm.get("username")!.errors | json }}
   <div class="field">
     <label for="password">Password</label>
     <input formControlName="password" type="text" name="password" />
   </div>
+  {{ authForm.get("password")!.errors | json }}
+
   <div class="field">
     <label for="confirmation">Confirm Password</label>
     <input
@@ -21,5 +24,9 @@
       name="confirmation"
     />
   </div>
+  {{ authForm.get("passwordConfirmation")!.errors | json }}
+
   <button class="ui submit button primary">Submit</button>
+
+  {{ authForm.errors | json }}
 </form>
