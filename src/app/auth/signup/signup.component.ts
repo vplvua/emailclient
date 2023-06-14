@@ -40,4 +40,8 @@ export class SignupComponent {
     private matchPassword: MatchPassword,
     private uniqueUsername: UniqueUsername
   ) {}
+
+  getControl(inputName: string): FormControl {
+    return this.authForm.get(inputName) as FormControl;
+  }
 }
