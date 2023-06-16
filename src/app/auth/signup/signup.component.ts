@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
+import { AuthService } from '../auth.service';
+import { SignupCredentials } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-signup',
@@ -38,10 +40,39 @@ export class SignupComponent {
 
   constructor(
     private matchPassword: MatchPassword,
-    private uniqueUsername: UniqueUsername
+    private uniqueUsername: UniqueUsername,
+    private authService: AuthService
   ) {}
 
   getControl(inputName: string): FormControl {
     return this.authForm.get(inputName) as FormControl;
+  }
+
+  onSubmit() {
+    if (this.authForm.invalid) {
+      return;
+    }
+
+    if (this.authForm.value) {
+      const credentials: SignupCredentials = {
+        username: this.authForm.value.username!,
+        password: this.authForm.value.password!,
+        passwordConfirmation: this.authForm.value.passwordConfirmation!,
+      };
+
+      this.authService.signup(credentials).subscribe({
+        next: (response) => {
+          console.log(response);
+          // Navigate to some other route
+        },
+        error: (err) => {
+          if (!err.status) {
+            this.authForm.setErrors({ noConnection: true });
+          } else {
+            this.authForm.setErrors({ unknownError: true });
+          }
+        },
+      });
+    }
   }
 }
