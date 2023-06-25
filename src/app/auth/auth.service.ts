@@ -29,4 +29,12 @@ export class AuthService {
         })
       );
   }
+
+  checkAuth() {
+    return this.http.get(`${environment.rootUrl}/auth/signedin`).pipe(
+      tap((response) => {
+        console.log(response);
+      })
+    );
+  }
 }
