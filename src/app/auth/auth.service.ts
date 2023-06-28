@@ -5,6 +5,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import { SignupCredentials } from '../shared/interfaces';
 import { SignupResponse } from '../shared/interfaces';
 import { environment } from '../../environment';
+import { SigninResponse } from '../shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +32,19 @@ export class AuthService {
   }
 
   checkAuth() {
-    return this.http.get(`${environment.rootUrl}/auth/signedin`).pipe(
-      tap((response) => {
-        console.log(response);
+    return this.http
+      .get<SigninResponse>(`${environment.rootUrl}/auth/signedin`)
+      .pipe(
+        tap(({ authenticated }) => {
+          this.signedin$.next(authenticated);
+        })
+      );
+  }
+
+  signout() {
+    return this.http.post(`${environment.rootUrl}/auth/signout`, {}).pipe(
+      tap(() => {
+        this.signedin$.next(false);
       })
     );
   }
