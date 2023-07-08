@@ -5,6 +5,7 @@ import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
 import { AuthService } from '../auth.service';
 import { SignupCredentials } from '../../shared/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -41,7 +42,8 @@ export class SignupComponent {
   constructor(
     private matchPassword: MatchPassword,
     private uniqueUsername: UniqueUsername,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   getControl(inputName: string): FormControl {
@@ -62,8 +64,7 @@ export class SignupComponent {
 
       this.authService.signup(credentials).subscribe({
         next: (response) => {
-          console.log(response);
-          // Navigate to some other route
+          this.router.navigateByUrl('/inbox');
         },
         error: (err) => {
           if (!err.status) {

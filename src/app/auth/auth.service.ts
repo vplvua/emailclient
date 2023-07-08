@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
 
 import { SignupCredentials } from '../shared/interfaces';
+import { SigninCredentials } from '../shared/interfaces';
 import { SignupResponse } from '../shared/interfaces';
 import { environment } from '../../environment';
 import { SigninResponse } from '../shared/interfaces';
@@ -47,5 +48,15 @@ export class AuthService {
         this.signedin$.next(false);
       })
     );
+  }
+
+  signin(credentials: SigninCredentials) {
+    return this.http
+      .post<SigninResponse>(`${environment.rootUrl}/auth/signin`, credentials)
+      .pipe(
+        tap(() => {
+          this.signedin$.next(true);
+        })
+      );
   }
 }

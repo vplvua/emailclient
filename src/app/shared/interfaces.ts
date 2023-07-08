@@ -4,6 +4,11 @@ export interface SignupCredentials {
   passwordConfirmation: string;
 }
 
+export interface SigninCredentials {
+  username: string;
+  password: string;
+}
+
 export interface SignupResponse {
   username: string;
 }
