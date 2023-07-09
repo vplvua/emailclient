@@ -13,7 +13,7 @@ import { SigninResponse } from '../shared/interfaces';
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-  signedin$ = new BehaviorSubject(false);
+  signedin$ = new BehaviorSubject<boolean | null>(null);
 
   usernameAvailable(username: string) {
     return this.http.post<{ available: boolean }>(

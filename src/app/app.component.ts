@@ -9,7 +9,7 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  signedin$ = new BehaviorSubject(false);
+  signedin$ = new BehaviorSubject<boolean | null>(false);
 
   constructor(private authService: AuthService) {
     this.signedin$ = this.authService.signedin$;
