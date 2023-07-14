@@ -14,6 +14,7 @@ import { SigninResponse } from '../shared/interfaces';
 export class AuthService {
   constructor(private http: HttpClient) {}
   signedin$ = new BehaviorSubject<boolean | null>(null);
+  username = '';
 
   usernameAvailable(username: string) {
     return this.http.post<{ available: boolean }>(
@@ -26,8 +27,9 @@ export class AuthService {
     return this.http
       .post<SignupResponse>(`${environment.rootUrl}/auth/signup`, credentials)
       .pipe(
-        tap(() => {
+        tap(({ username }) => {
           this.signedin$.next(true);
+          this.username = username;
         })
       );
   }
@@ -36,8 +38,9 @@ export class AuthService {
     return this.http
       .get<SigninResponse>(`${environment.rootUrl}/auth/signedin`)
       .pipe(
-        tap(({ authenticated }) => {
+        tap(({ authenticated, username }) => {
           this.signedin$.next(authenticated);
+          this.username = username;
         })
       );
   }
@@ -54,8 +57,9 @@ export class AuthService {
     return this.http
       .post<SigninResponse>(`${environment.rootUrl}/auth/signin`, credentials)
       .pipe(
-        tap(() => {
+        tap(({ username }) => {
           this.signedin$.next(true);
+          this.username = username;
         })
       );
   }

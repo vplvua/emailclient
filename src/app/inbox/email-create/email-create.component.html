@@ -5,6 +5,6 @@
 <app-modal (dismiss)="showModal = false" *ngIf="showModal">
   <div modalTitle>Compose email</div>
   <div class="content">
-    <app-email-form (send)="showModal = false"></app-email-form>
+    <app-email-form [email]="email"></app-email-form>
   </div>
 </app-modal>

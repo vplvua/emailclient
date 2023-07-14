@@ -1,1 +1,29 @@
-<p>email-form works!</p>
+<form class="ui form" [formGroup]="emailForm">
+  <app-input
+    [control]="getValue('from')"
+    inputType="email"
+    label="From"
+  ></app-input>
+
+  <app-input
+    [control]="getValue('to')"
+    inputType="email"
+    label="To"
+  ></app-input>
+
+  <app-input
+    [control]="getValue('subject')"
+    inputType="text"
+    label="Subject"
+  ></app-input>
+
+  <app-input
+    [control]="getValue('text')"
+    controlType="textarea"
+    label="Content"
+  ></app-input>
+
+  <div class="ui divider"></div>
+
+  <button class="ui button primary" type="submit">Send email</button>
+</form>
